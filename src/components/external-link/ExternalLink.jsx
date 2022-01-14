@@ -21,11 +21,12 @@ export function ExternalLink({ children, url, type }) {
           text-decoration: none;
           color: #333;
           background-color: #eee;
-          transition: box-shadow 200ms;
+          transition: 200ms;
         }
 
         .mx-external-link:hover {
           box-shadow: 3px 3px 6px #aaa;
+          opacity: 0.95;
         }
 
         .mx-external-link__img {
