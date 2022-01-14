@@ -2,6 +2,7 @@ import "./App.css";
 import { Card } from "./components/card";
 import { Container } from "./components/container";
 import { CardGroup } from "./components/card-group";
+import { GAMES } from "./AppModel";
 
 function App() {
   return (
@@ -13,34 +14,16 @@ function App() {
           interact and have fun! 🎮 🎲 🕹
         </p>
         <CardGroup>
-          <Card
-            imgUrl="https://user-images.githubusercontent.com/89046766/149423374-f166a167-3459-46ed-a92c-5d9d81734b7e.png"
-            title="Gartic"
-            description="Draw and guess what your mates are drawing."
-            gameUrl="https://gartic.io/"
-            meetUrl="https://meet.google.com/vko-ucdq-bty"
-          />
-          <Card
-            imgUrl="https://user-images.githubusercontent.com/89046766/149423374-f166a167-3459-46ed-a92c-5d9d81734b7e.png"
-            title="Gartic"
-            description="Draw and guess what your mates are drawing."
-            gameUrl="https://gartic.io/"
-            meetUrl="https://meet.google.com/vko-ucdq-bty"
-          />
-          <Card
-            imgUrl="https://user-images.githubusercontent.com/89046766/149423374-f166a167-3459-46ed-a92c-5d9d81734b7e.png"
-            title="Gartic"
-            description="Draw and guess what your mates are drawing."
-            gameUrl="https://gartic.io/"
-            meetUrl="https://meet.google.com/vko-ucdq-bty"
-          />
-          <Card
-            imgUrl="https://user-images.githubusercontent.com/89046766/149423374-f166a167-3459-46ed-a92c-5d9d81734b7e.png"
-            title="Gartic"
-            description="Draw and guess what your mates are drawing."
-            gameUrl="https://gartic.io/"
-            meetUrl="https://meet.google.com/vko-ucdq-bty"
-          />
+          {GAMES.map((game) => (
+            <Card
+              key={game.title}
+              imgUrl={game.imgUrl}
+              title={game.title}
+              description={game.description}
+              gameUrl={game.gameUrl}
+              meetUrl={game.meetUrl}
+            />
+          ))}
         </CardGroup>
       </Container>
     </div>
