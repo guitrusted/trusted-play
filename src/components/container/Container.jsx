@@ -3,9 +3,9 @@ import React from "react";
 export function Container({ children }) {
   return (
     <>
-      <div className="mx-container">{children}</div>
+      <div className="tp-container">{children}</div>
       <style jsx>{`
-        .mx-container {
+        .tp-container {
           margin: 30px;
         }
       `}</style>

@@ -18,3 +18,17 @@ body {
   color: #333;
   font-size: 18px;
 }
+
+/* Util Classes */
+
+.text-align--right {
+  text-align: right;
+}
+
+.text-align--center {
+  text-align: center;
+}
+
+.margin-bottom--md {
+  margin-bottom: 16px;
+}
