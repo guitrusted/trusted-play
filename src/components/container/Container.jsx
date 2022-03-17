@@ -6,7 +6,8 @@ export function Container({ children }) {
       <div className="tp-container">{children}</div>
       <style jsx>{`
         .tp-container {
-          margin: 30px;
+          max-width: 1010px;
+          margin: 32px auto;
         }
       `}</style>
     </>

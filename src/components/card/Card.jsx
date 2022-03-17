@@ -95,8 +95,9 @@ export function Card({
           border-radius: 5px;
           padding: 16px;
           width: var(--tp-card-width);
-          margin: 0 32px 32px 0;
+          margin: 16px;
           overflow: hidden;
+          min-height: 300px;
         }
 
         .tp-card:hover {
