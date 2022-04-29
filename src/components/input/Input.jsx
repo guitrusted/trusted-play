@@ -1,9 +1,9 @@
 import React from "react";
 
-export function Input({ onChange }) {
+export function Input({ onChange, value }) {
   return (
     <>
-      <input className="tp-input" onChange={onChange} />
+      <input className="tp-input" onChange={onChange} value={value} />
       <style jsx>{`
         .tp-input {
           height: 30px;

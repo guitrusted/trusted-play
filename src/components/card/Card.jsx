@@ -12,6 +12,7 @@ export function Card({
   gameUrl,
   id,
   onDeleteGame = () => {},
+  onEditGame = () => {},
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -68,7 +69,7 @@ export function Card({
             <Button type="danger" onClick={() => removeHandler()}>
               Remove
             </Button>
-            <Button onClick={() => alert("Ops! It's not ready yet. :)")}>
+            <Button onClick={() => onEditGame(id)}>
               <Icon
                 iconKey="edit"
                 style={{

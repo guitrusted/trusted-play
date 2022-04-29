@@ -55,6 +55,13 @@ function App() {
     removeGame(id, fetchGames);
   }
 
+  function onEditGame(id) {
+    const game = gamesList.find((game) => game.id === id);
+
+    setFormModel(game);
+    setShouldShowAddGameForm(true);
+  }
+
   signIn();
 
   return (
@@ -81,6 +88,7 @@ function App() {
               gameUrl={game.gameUrl}
               meetUrl={game.meetUrl}
               onDeleteGame={onDeleteGame}
+              onEditGame={onEditGame}
             />
           ))}
         </CardGroup>
