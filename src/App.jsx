@@ -47,7 +47,13 @@ function App() {
   }
 
   function closeDrawer() {
-    setFormModel({});
+    setFormModel({
+      name: "",
+      shortDescription: "",
+      imageUrl: "",
+      gameUrl: "",
+      meetUrl: "",
+    });
     setShouldShowAddGameForm(false);
   }
 
