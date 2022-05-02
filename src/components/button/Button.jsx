@@ -5,7 +5,6 @@ export function Button({ children, type, onClick, disabled }) {
     <>
       <button
         disabled={disabled}
-        className="tp-button"
         className={`tp-button tp-button--${type}`}
         onClick={onClick}
       >
