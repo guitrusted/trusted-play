@@ -7,9 +7,13 @@ import { Button } from "./components/button";
 import { Drawer } from "./components/drawer";
 import { Input } from "./components/input";
 import { Field } from "./components/field";
-import { GAMES } from "./AppModel";
 import { signIn } from "./services/authenticationHandler";
-import { postGame, getGames, removeGame } from "./services/firebaseHandler";
+import {
+  postGame,
+  updateGame,
+  getGames,
+  removeGame,
+} from "./services/firebaseHandler";
 import "./App.css";
 
 function App() {
@@ -70,6 +74,21 @@ function App() {
 
   signIn();
 
+  const isEditing = !!formModel.id;
+
+  function justSaveIt() {
+    const successCallback = () => {
+      fetchGames();
+      closeDrawer();
+    };
+
+    if (isEditing) {
+      updateGame(formModel, successCallback);
+    } else {
+      postGame(formModel, successCallback);
+    }
+  }
+
   return (
     <div className="app">
       <Container>
@@ -101,18 +120,9 @@ function App() {
       </Container>
       <Drawer
         isVisible={shouldShowAddGameForm}
-        title="Add a new game"
+        title={isEditing ? "Edit game" : "Add a new game"}
         footer={
-          <Button
-            type="primary"
-            disabled={!isFormValid()}
-            onClick={() => {
-              postGame(formModel, () => {
-                fetchGames();
-                closeDrawer();
-              });
-            }}
-          >
+          <Button type="primary" disabled={!isFormValid()} onClick={justSaveIt}>
             Just save it
           </Button>
         }

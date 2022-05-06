@@ -58,6 +58,17 @@ export function postGame(game, successCallback) {
     .catch((e) => console.error("OPS! Error happened. /o\\", e));
 }
 
+export function updateGame(game, successCallback) {
+  checkId(game);
+
+  update(ref(db, `games/${game.id}`), game)
+    .then(() => {
+      successCallback();
+      console.log("SUCCESS!!! Game updated successfully! \\o/");
+    })
+    .catch((e) => console.error("OPS! Error happened. /o\\", e));
+}
+
 export function getGames(cb = () => {}) {
   get(child(ref(db), "games")).then((snapshot) => {
     if (snapshot.exists()) {
