@@ -1,16 +1,17 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "./components/card";
 import { Container } from "./components/container";
 import { CardGroup } from "./components/card-group";
 import { AddButton } from "./components/add-button";
 import { signIn } from "./services/authenticationHandler";
-import { GameFormDrawer } from "./modules/gameFormDrawer/GameFormDrawer";
+import { GameFormDrawer } from "./modules/game-form-drawer/GameFormDrawer";
 import { getGames, removeGame } from "./services/firebaseHandler";
 import "./App.css";
 
 function App() {
   const [gamesList, setGamesList] = useState([]);
   const [shouldShowAddGameForm, setShouldShowAddGameForm] = useState(false);
+  const [gameEditing, setGameEditing] = useState({});
 
   function fetchGames() {
     getGames((games) => {
@@ -29,7 +30,7 @@ function App() {
   function onEditGame(id) {
     const game = gamesList.find((game) => game.id === id);
 
-    setFormModel(game);
+    setGameEditing(game);
     setShouldShowAddGameForm(true);
   }
 
@@ -64,7 +65,15 @@ function App() {
           ))}
         </CardGroup>
       </Container>
-      <GameFormDrawer isVisible={shouldShowAddGameForm} />
+      <GameFormDrawer
+        isVisible={shouldShowAddGameForm}
+        gameModel={gameEditing}
+        onClose={() => {
+          setShouldShowAddGameForm(false);
+          setGameEditing({});
+          fetchGames();
+        }}
+      />
     </div>
   );
 }

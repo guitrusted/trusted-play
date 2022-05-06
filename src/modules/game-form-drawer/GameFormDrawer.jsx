@@ -1,13 +1,17 @@
-import React from "react";
-import { Button } from "./components/button";
-import { Drawer } from "./components/drawer";
-import { Input } from "./components/input";
-import { Field } from "./components/field";
+import React, { useState, useEffect } from "react";
+import { Button } from "../../components/button";
+import { Drawer } from "../../components/drawer";
+import { Input } from "../../components/input";
+import { Field } from "../../components/field";
 import { postGame, updateGame } from "../../services/firebaseHandler";
 
-export function GameFormDrawer({ isVisible }) {
+export function GameFormDrawer({ isVisible, onClose, gameModel }) {
   const [formModel, setFormModel] = useState({});
   const isEditing = !!formModel.id;
+
+  useEffect(() => {
+    setFormModel(gameModel);
+  }, [isVisible]);
 
   function isFormValid() {
     return (
@@ -27,7 +31,7 @@ export function GameFormDrawer({ isVisible }) {
       gameUrl: "",
       meetUrl: "",
     });
-    setShouldShowAddGameForm(false);
+    onClose();
   }
 
   function setField(field, e) {
@@ -40,7 +44,6 @@ export function GameFormDrawer({ isVisible }) {
 
   function justSaveIt() {
     const successCallback = () => {
-      fetchGames();
       closeDrawer();
     };
 
