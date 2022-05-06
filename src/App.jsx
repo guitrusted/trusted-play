@@ -3,27 +3,17 @@ import { Card } from "./components/card";
 import { Container } from "./components/container";
 import { CardGroup } from "./components/card-group";
 import { AddButton } from "./components/add-button";
-import { Button } from "./components/button";
-import { Drawer } from "./components/drawer";
-import { Input } from "./components/input";
-import { Field } from "./components/field";
 import { signIn } from "./services/authenticationHandler";
-import {
-  postGame,
-  updateGame,
-  getGames,
-  removeGame,
-} from "./services/firebaseHandler";
+import { GameFormDrawer } from "./modules/gameFormDrawer/GameFormDrawer";
+import { getGames, removeGame } from "./services/firebaseHandler";
 import "./App.css";
 
 function App() {
   const [gamesList, setGamesList] = useState([]);
   const [shouldShowAddGameForm, setShouldShowAddGameForm] = useState(false);
-  const [formModel, setFormModel] = useState({});
 
   function fetchGames() {
     getGames((games) => {
-      console.log("fetched games", games);
       if (!games) return;
 
       setGamesList(Object.values(games));
@@ -31,35 +21,6 @@ function App() {
   }
 
   useEffect(() => fetchGames(), []);
-
-  function setField(field, e) {
-    const newModel = {
-      ...formModel,
-      [field]: e.target.value,
-    };
-    setFormModel(newModel);
-  }
-
-  function isFormValid() {
-    return (
-      formModel.name &&
-      formModel.shortDescription &&
-      formModel.imageUrl &&
-      formModel.gameUrl &&
-      formModel.meetUrl
-    );
-  }
-
-  function closeDrawer() {
-    setFormModel({
-      name: "",
-      shortDescription: "",
-      imageUrl: "",
-      gameUrl: "",
-      meetUrl: "",
-    });
-    setShouldShowAddGameForm(false);
-  }
 
   function onDeleteGame(id) {
     removeGame(id, fetchGames);
@@ -73,21 +34,6 @@ function App() {
   }
 
   signIn();
-
-  const isEditing = !!formModel.id;
-
-  function justSaveIt() {
-    const successCallback = () => {
-      fetchGames();
-      closeDrawer();
-    };
-
-    if (isEditing) {
-      updateGame(formModel, successCallback);
-    } else {
-      postGame(formModel, successCallback);
-    }
-  }
 
   return (
     <div className="app">
@@ -118,49 +64,7 @@ function App() {
           ))}
         </CardGroup>
       </Container>
-      <Drawer
-        isVisible={shouldShowAddGameForm}
-        title={isEditing ? "Edit game" : "Add a new game"}
-        footer={
-          <Button type="primary" disabled={!isFormValid()} onClick={justSaveIt}>
-            Just save it
-          </Button>
-        }
-        onClose={closeDrawer}
-      >
-        <form>
-          <Field label="Name" required>
-            <Input
-              value={formModel.name}
-              onChange={(e) => setField("name", e)}
-            />
-          </Field>
-          <Field label="Description" required>
-            <Input
-              value={formModel.shortDescription}
-              onChange={(e) => setField("shortDescription", e)}
-            />
-          </Field>
-          <Field label="Image URL" required>
-            <Input
-              value={formModel.imageUrl}
-              onChange={(e) => setField("imageUrl", e)}
-            />
-          </Field>
-          <Field label="Game URL" required>
-            <Input
-              value={formModel.gameUrl}
-              onChange={(e) => setField("gameUrl", e)}
-            />
-          </Field>
-          <Field label="Meet URL" required>
-            <Input
-              value={formModel.meetUrl}
-              onChange={(e) => setField("meetUrl", e)}
-            />
-          </Field>
-        </form>
-      </Drawer>
+      <GameFormDrawer isVisible={shouldShowAddGameForm} />
     </div>
   );
 }
